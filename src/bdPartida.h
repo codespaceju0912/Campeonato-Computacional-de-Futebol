@@ -3,7 +3,7 @@
 #define MAX_PARTIDAS 50
 #include "partida.h"
 
-void 
+ 
 
 
 
