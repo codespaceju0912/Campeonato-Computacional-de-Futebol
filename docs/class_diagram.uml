@@ -1,8 +1,3 @@
-# Campeonato-Computacional-de-Futebol
-Trabalho de Estrutura de Dados, Programa em C.
-
-
-```plantuml
 @startuml
 class partida {
     ID: int
@@ -37,4 +32,3 @@ class bdpartida_busca_return{
 bdpartida "n" -- "1" partida
 bdtime "n" -- "1" time
 @enduml
-```
