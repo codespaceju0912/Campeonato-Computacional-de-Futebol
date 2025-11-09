@@ -1,0 +1,18 @@
+Table partida{
+  id integer [primary key]
+  time1 interger
+  time2 integer
+  golstime1 integer
+  golstime2 interger
+}
+
+Table times{
+  id interger [primary key]
+  timeName varchar
+}
+
+Ref: times.id < partida."time2"
+
+Ref: times.id < partida."time1"
+
+  

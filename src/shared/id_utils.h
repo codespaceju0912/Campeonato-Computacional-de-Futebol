@@ -1,0 +1,7 @@
+#ifndef ID_UTILS_H
+#define ID_UTILS_H 0
+
+#define OBJETO_COM_ID_ESPECIFICADO_NAO_EXISTE_FLAG -1
+
+#endif
+
