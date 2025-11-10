@@ -97,11 +97,16 @@ int main(){
     id_time_x = bd.times[9].id;
     id_time_x = bd.times[1].id;
 
-    bool x = FALSE;
+    char str[30];
+
+    printf("qual o prefixo? ");
+    scanf("%s", str);
+    
 
     for(int i = 0; i < MAX_TIMES+1; i++)
-        x = t_tem_prefixo(bdt_get_time(bd_ptr, i), "Se");
-
+        if(t_tem_prefixo(bdt_get_time(bd_ptr, i), str)){
+            printf("%d: %s",bdt_get_time(bd_ptr, i)->id, bdt_get_time(bd_ptr, i)->nome);
+        }
 
     return 0;
 }
