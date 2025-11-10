@@ -76,7 +76,7 @@ p_set_resposta p_set_id(Partida *p, int id) {
     return PARTIDA_SUCESSO;
 }
 
-p_set_resposta p_set_times(Partida *p, Time *t1, Time *t2) {
+p_set_resposta p_set_times(Partida *p, int t1, int t2) {
     if (p == NULL)
         return PARTIDA_PONTEIRO_NULO;
 

@@ -1,8 +1,6 @@
 #include "./../time/caso_de_usoT.c"
 #include <stdio.h>
 #define MAX_TIMES 10
-#define DB_TIME_ARQUIVO "file.csv"
-
 
 typedef struct bdtime
 {
