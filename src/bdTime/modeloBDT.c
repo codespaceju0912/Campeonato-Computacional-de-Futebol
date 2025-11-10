@@ -15,7 +15,7 @@ BDTime *bdt_create(){
 }
 
 
-Time* time_from_string(char* str, Time* time) {
+Time* time_from_string(char* str, Time* time) { // Converte uma string CSV em um objeto Time
     int id;
     char* nome = (char*) malloc(sizeof(char) * MAIOR_NOME_POSSIVEL);
     int response;
@@ -59,7 +59,7 @@ Time* time_from_string(char* str, Time* time) {
 }
 
 
-void load_dbt(BDTime* bd)
+void load_dbt(BDTime* bd) //Carrega o banco de dados de times a partir do arquivo CSV
 {
     FILE *times = fopen("./../../data/times.csv", "r");
     if(times == NULL){
