@@ -1,16 +1,16 @@
 #include "./../time/caso_de_usoT.c"
 #include <stdio.h>
 #define MAX_TIMES 10
-#define DB_TIME_ARQUIVO "file.csv"
-
 
 typedef struct bdtime
 {
     Time times[MAX_TIMES];
+    int qtd_times;
 }BDTime;
 
 BDTime *bdt_create(){
     BDTime *bdt = (BDTime *)malloc(sizeof(BDTime));
+    bdt->qtd_times = 0;
     return bdt;
 }
 
@@ -40,16 +40,16 @@ Time* time_from_string(char* str, Time* time) {
     if(time == NULL)
         return NULL;
 
-    response = t_set_id(time, id);
-    if(response == ID_MENOR_OU_IGUAL_A_ZERO)
+    response = t_set_id(time, id);//envia para TAD Time o id
+    if(response == ID_MENOR_QUE_ZERO) //verifica se o id é menor que 0
     {
         t_free(time);
         return NULL;
     }
 
-    response = t_set_nome(time, nome);
+    response = t_set_nome(time, nome);//envia para TAD Time o id
 
-    if(response == NOME_MUITO_GRANDE)
+    if(response == NOME_MUITO_GRANDE) //verifica se o nome é muito grande
     {
         t_free(time);
         return NULL;
@@ -61,6 +61,7 @@ Time* time_from_string(char* str, Time* time) {
 
 void load_dbt(BDTime* bd)
 {
+    int i;
     FILE *times = fopen("./../../data/times.csv", "r");
     if(times == NULL){
         fclose(times);
@@ -70,9 +71,9 @@ void load_dbt(BDTime* bd)
     char* str;
     char linha[100];
     fgets(linha, sizeof(linha), times); // removendo o cabeçalho
-    for(int i = 0; (str = fgets(linha, sizeof(linha), times))!=NULL; i++)
+    for(i = 0; (str = fgets(linha, sizeof(linha), times))!=NULL; i++)
         time_from_string(str, &(bd->times[i]));
-
+    bd->qtd_times = i;
     fclose(times);
 }
 
@@ -86,27 +87,27 @@ Time* bdt_get_time(BDTime* bd, unsigned int index) {
     return &bd->times[index];
 }
 
-int main(){
-    BDTime bd;
-    BDTime* bd_ptr = &bd;
-    load_dbt(bd_ptr);
+// int main(){
+//     BDTime bd;
+//     BDTime* bd_ptr = &bd;
+//     load_dbt(bd_ptr);
 
-    int id_time_x = 50;
-    id_time_x = bd.times[0].id;
-    id_time_x = bd.times[5].id;
-    id_time_x = bd.times[9].id;
-    id_time_x = bd.times[1].id;
+//     int id_time_x = 50;
+//     id_time_x = bd.times[0].id;
+//     id_time_x = bd.times[5].id;
+//     id_time_x = bd.times[9].id;
+//     id_time_x = bd.times[1].id;
 
-    char str[30];
+//     char str[30];
 
-    printf("qual o prefixo? ");
-    scanf("%s", str);
+//     printf("qual o prefixo? ");
+//     scanf("%s", str);
     
 
-    for(int i = 0; i < MAX_TIMES+1; i++)
-        if(t_tem_prefixo(bdt_get_time(bd_ptr, i), str)){
-            printf("%d: %s",bdt_get_time(bd_ptr, i)->id, bdt_get_time(bd_ptr, i)->nome);
-        }
+//     for(int i = 0; i < MAX_TIMES+1; i++)
+//         if(t_tem_prefixo(bdt_get_time(bd_ptr, i), str)){
+//             printf("%d: %s",bdt_get_time(bd_ptr, i)->id, bdt_get_time(bd_ptr, i)->nome);
+//         }
 
-    return 0;
-}
+//     return 0;
+// }

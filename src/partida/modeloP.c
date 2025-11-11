@@ -103,7 +103,7 @@ p_set_resposta p_set_gols(Partida *p, int gols1, int gols2) {
     return PARTIDA_SUCESSO;
 }
 
-int main(){
-    Partida *q = p_create();
-    return 0;
-}
+// int main(){
+//     Partida *q = p_create();
+//     return 0;
+// }

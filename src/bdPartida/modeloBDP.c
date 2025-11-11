@@ -1,21 +1,27 @@
 #include "./../partida/modeloP.c"
-#define MAX_PARTIDA 90 
+#include "./../bdTime/modeloBDT.c"
+#include <stdio.h>
+#define MAX_PARTIDA 90
 
 typedef struct bdpartida
 {
     Partida partidas[MAX_PARTIDA];
+    int qtd_partidas;
 }BDPartida;
 
-BDTime *bdt_create(){
-    BDTime *bdt = (BDTime *)malloc(sizeof(BDTime));
-    return bdt;
+BDPartida *bdp_create(){
+    BDPartida *bdp = (BDPartida *)malloc(sizeof(BDPartida));
+    bdp->qtd_partidas = 0;
+    return bdp;
 }
 
 
-Time* time_from_string(char* str) {
+Partida* partida_from_string(char* str, Partida* partida, BDTime* bdt) {
     int id;
-    char* nome = (char*) malloc(sizeof(char) * MAIOR_NOME_POSSIVEL);
-    Time* time;
+    int golsTime1;
+    int golsTime2;
+    Time* time1 = (Time*) malloc(sizeof(Time*));
+    Time* time2 = (Time*) malloc(sizeof(Time*));
     int response;
 
     if(str == NULL)
@@ -27,32 +33,86 @@ Time* time_from_string(char* str) {
         return NULL;
 
     id = atoi(token); // converte a parte numérica para int
+    
+    token = strtok(NULL, ",");
+    if (token == NULL)
+        return NULL;
+
+        
+    time1 = bdt_get_time(bdt, atoi((token)));
 
     token = strtok(NULL, ",");
     if (token == NULL)
         return NULL;
 
-    strncpy(nome, token, MAIOR_NOME_POSSIVEL - 1);
-    nome[MAIOR_NOME_POSSIVEL - 1] = '\0'; // garante o nulo final
+    time2 = bdt_get_time(bdt, atoi((token)));
 
-    time = t_create();
-    if(time == NULL)
+    token = strtok(NULL, ",");
+    if (token == NULL)
         return NULL;
 
-    response = t_set_id(time, id);
-    if(response == ID_MENOR_OU_IGUAL_A_ZERO)
+    golsTime1 = atoi(token);
+
+    token = strtok(NULL, ",");
+    if (token == NULL)
+        return NULL;
+
+    golsTime2 = atoi(token);
+
+    if(partida == NULL)
+        return NULL;
+
+    response = p_get_id(partida);//envia para TAD Partida o id
+    if(response == OBJETO_COM_ID_ESPECIFICADO_NAO_EXISTE_FLAG) //verifica se o id é menor que 0
     {
-        t_free(time);
+        t_free(partida);
         return NULL;
     }
 
-    response = t_set_nome(time, nome);
+    response = p_get_time1(partida);//envia para TAD Partida o time1
+    response = p_get_time2(partida);//envia para TAD Partida o time2
 
-    if(response == NOME_MUITO_GRANDE)
+    response = p_get_gols_time1(partida);//envia para TAD Partida a quantidade de jogo
+    if(response == GOL_NAO_POSSUI_FLAG) //verifica se o gol possui flag
     {
-        t_free(time);
+        t_free(partida);
         return NULL;
     }
+    response = p_get_gols_time2(partida);//envia para TAD Partida a quantidade de jogo
+    if(response == GOL_NAO_POSSUI_FLAG) //verifica se o gol possui flag
+    {
+        t_free(partida);
+        return NULL;
+    }
+    
+    return partida;
+}
 
-    return time;
+
+void load_dbt(BDPartida* bd, BDTime* time)
+{
+    int i;
+    FILE *partidas = fopen("./../../data/partidas_completo.csv", "r");
+    if(partidas == NULL){
+        fclose(partidas);
+        return;
+    } 
+    
+    char* str;
+    char linha[100];
+    fgets(linha, sizeof(linha), partidas); // removendo o cabeçalho
+    for(i = 0; (str = fgets(linha, sizeof(linha), partidas))!=NULL; i++)
+        partida_from_string(str, &(bd->partidas[i]), time);
+    bd->qtd_partidas = i;
+    fclose(partidas);
+}
+
+Partida* bdp_get_partida(BDPartida* bd, unsigned int index) {
+    if(bd == NULL)
+        return NULL;
+
+    if(index > MAX_PARTIDA)
+        return NULL;
+
+    return &bd->partidas[index];
 }

@@ -41,7 +41,7 @@ char *t_get_nome(Time *t){
 
 typedef enum { 
     TIME_PONTEIRO_NULO, 
-    ID_MENOR_OU_IGUAL_A_ZERO,
+    ID_MENOR_QUE_ZERO,
     NOME_NULO,NOME_MUITO_GRANDE, 
     SUCESSO 
 } t_set_resposta;
@@ -51,7 +51,7 @@ t_set_resposta t_set_id(Time *t, int id){
         return TIME_PONTEIRO_NULO;
 
     if(id < 0)
-        return ID_MENOR_OU_IGUAL_A_ZERO;
+        return ID_MENOR_QUE_ZERO;
 
     t->id = id;
     return SUCESSO;
