@@ -6,7 +6,6 @@
 #include <string.h>
 
 #include "./0_utils.c"
-// TODO: alterar isso aqui para .h depois
 #include "./../../inc/collections/LinkedList.h"
 #include "./../model/Partida.c" 
 #include "./../repo/PartidaDB.c" 
@@ -127,6 +126,7 @@ void viewExcluirPartida()
     if(opcao != '4') // Caso a opção seja == 4 pega-se a lista do database. Então, desalocar ela porvocará um seguimentation fault
         llFullFree(resultado, NULL);
 }
+
 
 
 #endif
