@@ -5,7 +5,6 @@
 #include <string.h>
 
 #include "./0_utils.c"
-// TODO: alterar isso aqui para .h depois
 #include "./../../inc/collections/LinkedList.h"
 #include "./../model/Partida.c" 
 #include "./../repo/PartidaDB.c" 
@@ -108,5 +107,6 @@ void viewBuscarPartidas()
     // Importante: liberar apenas a lista wrapper
     llFullFree(lista, NULL);
 }
+
 
 #endif
