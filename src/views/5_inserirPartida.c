@@ -2,7 +2,6 @@
 #define INSERIR_PARTIDA_VIEW_C 0
 
 #include "./0_utils.c"
-// TODO: alterar isso aqui para .h depois
 #include "./../../inc/collections/LinkedList.h"
 #include "./../model/Partida.c" 
 #include "./../repo/PartidaDB.c" 
@@ -93,6 +92,7 @@ void viewInserirPartida()
             break;
     }
 }
+
 
 
 #endif
