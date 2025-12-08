@@ -1,3 +1,5 @@
+Alunas: Julia almeida e Elisa Andrade
+
 # 📘 Sistema de Gerenciamento de Times e Partidas
 
 Este projeto implementa um sistema completo para gerenciamento de **times**, **partidas**, **estatísticas**, **classificação** e **consultas**, utilizando **estruturas de dados dinâmicas**, **listas encadeadas**, **modularização** e um modelo de “banco de dados em memória”.
@@ -246,3 +248,4 @@ As buscas por prefixo seguem a regra definida por searchByPrefix().
 Estatísticas dos times são recalculadas toda vez que são exibidas, garantindo precisão.
 
 ---
+
