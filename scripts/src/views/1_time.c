@@ -5,10 +5,9 @@
 #include <string.h>
 
 #include "./0_utils.c"
-#include "./../../inc/collections/LinkedList.h"
-#include "./../model/Partida.c" 
-#include "./../repo/PartidaDB.c" 
-#include "./../repo/TimeDB.c" 
+#include "../../inc/collections/LinkedList.h"
+#include "../../inc/service/model.h"
+#include "../../inc/service/repo.h"
 
 typedef struct {
     int id;
@@ -37,12 +36,12 @@ static void processPartida(void* p)
     int marcou = 0, sofreu = 0;
 
     // Verifica se o time é mandante ou visitante
-    if (strcmp(pt->t1->name, gContext.nome) == 0) {
-        marcou = pt->golsT1;
-        sofreu = pt->golsT2;
+    if (strcmp(timeGetName(partidaGetT1(p)), gContext.nome) == 0) {
+        marcou = partidaGetGolsT1(pt);
+        sofreu = partidaGetGolsT2(pt);
     } else {
-        marcou = pt->golsT2;
-        sofreu = pt->golsT1;
+        marcou = partidaGetGolsT2(pt);
+        sofreu = partidaGetGolsT1(pt);
     }
 
     gContext.gm += marcou;
@@ -56,13 +55,13 @@ static void processPartida(void* p)
 
 static void calcularEstatisticas(Time* t)
 {
-    gContext.id = t->id;
+    gContext.id = timeGetId(t);
     gContext.vitorias = 0;
     gContext.derrotas = 0;
     gContext.empates = 0;
     gContext.gm = 0;
     gContext.gs = 0;
-    strcpy(gContext.nome, t->name);
+    strcpy(gContext.nome, timeGetName(t));
 
     LinkedList* partidas = partidaDBSearchMandanteOrVisitante(gContext.nome);
 
@@ -153,7 +152,6 @@ void viewBuscarTimesPorPrefixo()
     // Importante: liberar apenas a lista wrapper, não os times reais
     llFullFree(encontrados, NULL);
 }
-
 
 
 #endif

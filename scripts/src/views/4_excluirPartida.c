@@ -6,10 +6,10 @@
 #include <string.h>
 
 #include "./0_utils.c"
-#include "./../../inc/collections/LinkedList.h"
-#include "./../model/Partida.c" 
-#include "./../repo/PartidaDB.c" 
-#include "./../repo/TimeDB.c" 
+#include "../../inc/collections/LinkedList.h"
+#include "../../inc/service/model.h"
+#include "../../inc/service/repo.h"
+#include "./2_partida.c"
 
 static int gSearchID;
 
@@ -19,7 +19,7 @@ bool removePredicate(void* p) {
     if(p == NULL)
         return false;
 
-    if (((Partida*)p)->id == gSearchID) {
+    if (partidaGetId((Partida*)p) == gSearchID) {
         freePartida(p);
         return true; 
     }
@@ -98,7 +98,7 @@ void viewExcluirPartida()
     // -------------------------------
     // Selecionar ID
     // -------------------------------
-    int id = readInt("\nDigite o ID da partida para excluir: ");
+    gSearchID = readInt("\nDigite o ID da partida para excluir: ");
 
     // -------------------------------
     // Confirmar exclusão
@@ -115,7 +115,7 @@ void viewExcluirPartida()
     }
 
 
-    bool removed = llRemoveFirstFound(partidaDB.partidas, removePredicate);
+    bool removed = llRemoveFirstFound(partidaDBGetAllPartidas(), removePredicate);
 
     if (!removed) {
         printf("Erro: Nao foi possivel remover a partida.\n");
@@ -126,7 +126,6 @@ void viewExcluirPartida()
     if(opcao != '4') // Caso a opção seja == 4 pega-se a lista do database. Então, desalocar ela porvocará um seguimentation fault
         llFullFree(resultado, NULL);
 }
-
 
 
 #endif

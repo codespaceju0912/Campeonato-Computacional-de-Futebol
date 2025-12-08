@@ -5,10 +5,10 @@
 #include <string.h>
 
 #include "./0_utils.c"
-#include "./../../inc/collections/LinkedList.h"
-#include "./../model/Partida.c" 
-#include "./../repo/PartidaDB.c" 
-#include "./../repo/TimeDB.c" 
+#include "../../inc/collections/LinkedList.h"
+#include "../../inc/service/model.h"
+#include "../../inc/service/repo.h"
+
 
 // -------------------------------------------------------
 // VIEW PRINCIPAL — Exibir todas as partidas cadastradas
@@ -18,16 +18,16 @@ static void imprimirPartida(void* p) {
 
     char resultado;
 
-    if (pt->golsT1 > pt->golsT2) resultado = 'M';       // Mandante venceu
-    else if (pt->golsT1 < pt->golsT2) resultado = 'V';  // Visitante venceu
+    if (partidaGetGolsT1(pt) > partidaGetGolsT2(pt)) resultado = 'M';       // Mandante venceu
+    else if (partidaGetGolsT1(pt) < partidaGetGolsT2(pt)) resultado = 'V';  // Visitante venceu
     else resultado = 'E';                               // Empate
 
     printf("%2d | %-11s | %-11s | %2d | %2d | %c\n",
-            pt->id,
-            pt->t1->name,
-            pt->t2->name,
-            pt->golsT1,
-            pt->golsT2,
+            partidaGetId(pt),
+            timeGetName(partidaGetT1(pt)),
+            timeGetName(partidaGetT2(pt)),
+            partidaGetGolsT1(pt),
+            partidaGetGolsT2(pt),
             resultado);
 }
 
@@ -107,6 +107,5 @@ void viewBuscarPartidas()
     // Importante: liberar apenas a lista wrapper
     llFullFree(lista, NULL);
 }
-
 
 #endif

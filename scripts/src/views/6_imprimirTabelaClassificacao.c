@@ -4,10 +4,9 @@
 #include <stdio.h>
 #include <ctype.h>
 #include "./0_utils.c"
-#include "./../../inc/collections/LinkedList.h"
-#include "./../model/Partida.c" 
-#include "./../repo/PartidaDB.c" 
-#include "./../repo/TimeDB.c" 
+#include "../../inc/collections/LinkedList.h"
+#include "../../inc/service/model.h"
+#include "../../inc/service/repo.h"
 #include "./1_time.c"
 #include "./2_partida.c"
 
@@ -51,7 +50,7 @@ static bool loadContext() {
     if(gCalcContext == NULL)
         return false;
 
-    llForeach(timeDB.times, forEachTimeLoadContext);
+    llForeach(timeDBGetAllTimes(), forEachTimeLoadContext);
 
     return true;
 }
@@ -143,6 +142,5 @@ void viewTabelaClassificacao()
     llFullFree(gCalcContext, free);
     gCalcContext = NULL;
 }
-
 
 #endif

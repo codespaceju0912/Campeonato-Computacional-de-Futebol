@@ -6,10 +6,9 @@
 #include <ctype.h>
 
 #include "./0_utils.c"
-#include "./../../inc/collections/LinkedList.h"
-#include "./../model/Partida.c" 
-#include "./../repo/PartidaDB.c" 
-#include "./../repo/TimeDB.c" 
+#include "../../inc/collections/LinkedList.h"
+#include "../../inc/service/model.h"
+#include "../../inc/service/repo.h"
 
 // -----------------------------------------------------
 // VIEW: Atualizar Partida
@@ -29,9 +28,9 @@ void viewAtualizarPartida()
 
     printf("\nPartida encontrada:\n");
     printf("%d | %s (%d) x (%d) %s\n",
-        p->id,
-        p->t1->name, p->golsT1,
-        p->golsT2, p->t2->name
+        partidaGetId(p),
+        timeGetName(partidaGetT1(p)), partidaGetGolsT1(p),
+        partidaGetGolsT2(p), timeGetName(partidaGetT1(p))
     );
 
     char buffer[16];
@@ -41,7 +40,7 @@ void viewAtualizarPartida()
 
     // --- Gols do time 1 ---
     readString("Novos gols para o mandante: ", buffer, sizeof(buffer));
-    int novosGolsT1 = p->golsT1;  // default mantém o antigo
+    int novosGolsT1 = partidaGetGolsT1(p);  // default mantém o antigo
 
     if (strcmp(buffer, "-") != 0) {
         // validar número
@@ -49,7 +48,7 @@ void viewAtualizarPartida()
         long val = strtol(buffer, &endptr, 10);
 
         if (endptr == buffer || *endptr != '\0' || val < 0) {
-            printf("Valor inválido. Mantendo gols anteriores (%d).\n", p->golsT1);
+            printf("Valor inválido. Mantendo gols anteriores (%d).\n", partidaGetGolsT1(p));
         } else {
             novosGolsT1 = (int)val;
         }
@@ -57,14 +56,14 @@ void viewAtualizarPartida()
 
     // --- Gols do time 2 ---
     readString("Novos gols para o visitante: ", buffer, sizeof(buffer));
-    int novosGolsT2 = p->golsT2;
+    int novosGolsT2 = partidaGetGolsT2(p);
 
     if (strcmp(buffer, "-") != 0) {
         char *endptr;
         long val = strtol(buffer, &endptr, 10);
 
         if (endptr == buffer || *endptr != '\0' || val < 0) {
-            printf("Valor inválido. Mantendo gols anteriores (%d).\n", p->golsT2);
+            printf("Valor inválido. Mantendo gols anteriores (%d).\n", partidaGetGolsT2(p));
         } else {
             novosGolsT2 = (int)val;
         }
@@ -73,9 +72,9 @@ void viewAtualizarPartida()
     // --- Exibe preview do resultado ---
     printf("\nNovo resultado previsto:\n");
     printf("%d | %s (%d) x (%d) %s\n",
-        p->id,
-        p->t1->name, novosGolsT1,
-        novosGolsT2, p->t2->name
+        partidaGetId(p),
+        timeGetName(partidaGetT1(p)), novosGolsT1,
+        novosGolsT2, timeGetName(partidaGetT2(p))
     );
 
     // --- Confirmação ---
@@ -91,11 +90,21 @@ void viewAtualizarPartida()
     }
 
     // --- Atualiza valores ---
-    p->golsT1 = novosGolsT1;
-    p->golsT2 = novosGolsT2;
+    bool ok;
+
+    ok = partidaSetGolsT1(p, novosGolsT1);
+    if(!ok) {
+        printf("Erro interno: talvez você tenha passado um valor negativo para número de gols");
+        return;
+    }
+
+    ok = partidaSetGolsT2(p, novosGolsT2);
+    if(!ok) {
+        printf("Erro interno: talvez você tenha passado um valor negativo para número de gols");
+        return;
+    }
 
     printf("Partida atualizada com sucesso!\n");
 }
-
 
 #endif

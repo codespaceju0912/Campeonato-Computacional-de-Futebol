@@ -2,11 +2,12 @@
 #define INSERIR_PARTIDA_VIEW_C 0
 
 #include "./0_utils.c"
-#include "./../../inc/collections/LinkedList.h"
-#include "./../model/Partida.c" 
-#include "./../repo/PartidaDB.c" 
-#include "./../repo/TimeDB.c" 
+#include "../../inc/collections/LinkedList.h"
+#include "../../inc/service/model.h"
+#include "../../inc/service/repo.h"
 #include "./2_partida.c"
+
+extern Partida* partidaJournal;
 
 // --------------------------------------------------------
 // VIEW: Inserir nova partida
@@ -92,7 +93,6 @@ void viewInserirPartida()
             break;
     }
 }
-
 
 
 #endif
