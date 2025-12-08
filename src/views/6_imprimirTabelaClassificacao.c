@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <ctype.h>
 #include "./0_utils.c"
-// TODO: alterar isso aqui para .h depois
 #include "./../../inc/collections/LinkedList.h"
 #include "./../model/Partida.c" 
 #include "./../repo/PartidaDB.c" 
@@ -144,5 +143,6 @@ void viewTabelaClassificacao()
     llFullFree(gCalcContext, free);
     gCalcContext = NULL;
 }
+
 
 #endif
