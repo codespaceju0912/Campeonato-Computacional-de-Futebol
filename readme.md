@@ -1,4 +1,4 @@
-Alunas: Julia almeida e Elisa Andrade
+Alunas: Julia Almeida e Elisa Andrade
 
 # 📘 Sistema de Gerenciamento de Times e Partidas
 
@@ -248,4 +248,5 @@ As buscas por prefixo seguem a regra definida por searchByPrefix().
 Estatísticas dos times são recalculadas toda vez que são exibidas, garantindo precisão.
 
 ---
+
 
